@@ -34,4 +34,14 @@ for (const path of fs.readdirSync("./src/")) {
 		);
 	}
 }
+
+for (const path of fs.readdirSync("./www/", {recursive: true})) {
+	console.log(`Copying files in 'www'...`);
+	if (fs.statSync(`./www/${path}`).isFile()) {
+		console.log(`Copying file '${path}'...`);
+		fs.copyFileSync(`./www/${path}`, `${OUT_DIR}/${path}`);
+		continue;
+	}
+	fs.mkdirSync(`${OUT_DIR}/${path}`, { recursive: true });
+}
 console.log("Build complete!");

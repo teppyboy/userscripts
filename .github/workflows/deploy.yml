@@ -9,11 +9,12 @@ jobs:
   # Build job
   build:
     # Specify runner +  build & upload the static files as an artifact
-    runs-on: oven/bun
+    runs-on: ubuntu-latest
     steps:
       - name: Build static files
         id: build
         run: |
+            curl -fsSL https://bun.sh/install | bash
             bun ./scripts/build.js
 
       - name: Upload static files as artifact
