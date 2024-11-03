@@ -1,0 +1,1 @@
+console.log("This file exists to provide Bun autocompletion in VSCode");
