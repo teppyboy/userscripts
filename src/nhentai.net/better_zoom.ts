@@ -77,14 +77,26 @@ function zoomIn() {
     addZoomLevelIfNotExists(currentZoomLevel);
     setZoomContainer(currentZoomLevel);
 }
-imageContainer.addEventListener("click", () => {
+// Hook for the next and previous buttons
+function hookButtons() {
+    // biome-ignore lint/complexity/noForEach: forEach
+    document.querySelectorAll(".reader-pagination").forEach((element) => {
+        for (const child of Array.from(element.children)) {
+            child.addEventListener("click", prevFwdImage);
+        }
+    });
+}
+function prevFwdImage() {
     setZoomContainer(currentZoomLevel);
-});
+    hookButtons();
+}
+imageContainer.addEventListener("click", prevFwdImage);
+hookButtons();
 for (const element of Array.from(document.getElementsByClassName("reader-buttons-right"))) {
     const cloned = newZoomElement.cloneNode(true);
     // Insert events into the cloned element
-    cloned.childNodes[0].addEventListener("click", () => zoomOut());
-    cloned.childNodes[2].addEventListener("click", () => zoomIn());
+    cloned.childNodes[0].addEventListener("click", zoomOut);
+    cloned.childNodes[2].addEventListener("click", zoomIn);
     element.insertBefore(cloned, element.firstChild);
 };
 // Cleanup

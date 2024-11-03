@@ -5,6 +5,9 @@ const OUT_DIR = "./dist";
 for (const path of fs.readdirSync("./src/")) {
 	console.log(`Begin building files in '${path}'...`);
 	for (const file of fs.readdirSync(`./src/${path}`)) {
+		if (!file.endsWith(".ts")) {
+			continue;
+		}
 		console.log(`Building file '${path}/${file}'...`);
 		await Bun.build({
 			entrypoints: [`./src/${path}/${file}`],
