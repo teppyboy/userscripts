@@ -3,7 +3,7 @@
 // @namespace   tretrauit-dev
 // @match       *://nhentai.net/g/*
 // @grant       none
-// @version     1.0
+// @version     1.0.1
 // @author      tretrauit
 // @description Better Zoom for nhentai
 // @run-at      document-idle
