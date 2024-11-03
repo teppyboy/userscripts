@@ -1,15 +1,13 @@
 # UserScripts
 
-To install dependencies:
+## Websites supported
++ [nhentai.net](./src/nhentai.net/)
 
-```bash
-bun install
-```
+## Installation
+1. Install Violentmonkey/Tampermonkey or any other UserScript manager
+2. Click on the `Install` hyperlink to install the script
 
-To run:
-
-```bash
-bun run index.ts
-```
+## License
+[MIT](./LICENSE)
 
 This project was created using `bun init` in bun v1.1.32. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

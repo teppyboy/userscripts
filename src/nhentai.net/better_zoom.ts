@@ -3,7 +3,7 @@
 // @namespace   tretrauit-dev
 // @match       *://nhentai.net/g/*
 // @grant       none
-// @version     1.0.1
+// @version     1.0.2
 // @author      tretrauit
 // @description Better Zoom for nhentai
 // @run-at      document-idle
@@ -77,25 +77,37 @@ function zoomIn() {
     addZoomLevelIfNotExists(currentZoomLevel);
     setZoomContainer(currentZoomLevel);
 }
-// Hook for the next and previous buttons
-function hookButtons() {
-    // biome-ignore lint/complexity/noForEach: forEach
-    document.querySelectorAll(".reader-pagination").forEach((element) => {
-        for (const child of Array.from(element.children)) {
-            child.addEventListener("click", prevFwdImage);
-        }
-    });
-}
-function prevFwdImage() {
+function setCustomPercentage() {
+    let result = prompt("Enter a custom zoom level (in percentage) (e.g. 100 or 100%)\nNote that if you type 0.XX then it'll get converted to XX%", `${currentZoomLevel}`);
+    if (result === null) {
+        return;
+    }
+    if (result.endsWith("%")) {
+        result = result.slice(0, -1);
+    }
+    let resNum = Number.parseFloat(result);
+    if (Number.isNaN(resNum)) {
+        alert("Invalid number");
+        return;
+    }
+    if (resNum < 1) {
+        resNum *= 100;
+    }
+    currentZoomLevel = resNum;
+    addZoomLevelIfNotExists(currentZoomLevel);
     setZoomContainer(currentZoomLevel);
-    hookButtons();
 }
-imageContainer.addEventListener("click", prevFwdImage);
-hookButtons();
+// Observe for changes in the image container
+// By using Observer we don't need to hook the buttons which change the image page anymore
+const observer = new MutationObserver(() => {
+    setZoomContainer(currentZoomLevel);
+});
+observer.observe(imageContainer, {childList: true, subtree: true});
 for (const element of Array.from(document.getElementsByClassName("reader-buttons-right"))) {
     const cloned = newZoomElement.cloneNode(true);
     // Insert events into the cloned element
     cloned.childNodes[0].addEventListener("click", zoomOut);
+    cloned.childNodes[1].addEventListener("dblclick", setCustomPercentage);
     cloned.childNodes[2].addEventListener("click", zoomIn);
     element.insertBefore(cloned, element.firstChild);
 };
