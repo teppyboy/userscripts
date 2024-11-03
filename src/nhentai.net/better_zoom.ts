@@ -9,7 +9,7 @@
 // @run-at      document-idle
 // @homepageURL https://github.com/tretrauit/userscripts
 // @supportURL  https://github.com/tretrauit/userscripts/-/issues
-// @downloadURL https://tretrauit.me/userscripts/nhentai.net/better_zoom.js
+// @downloadURL https://tretrauit.me/userscripts/nhentai.net/better_zoom.user.js
 // ==/UserScript==
 
 let currentZoomLevel = 100;

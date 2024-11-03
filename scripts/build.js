@@ -29,9 +29,10 @@ for (const path of fs.readdirSync("./src/")) {
 		const outFileName = file.replace(".ts", ".js");
 		const outText = fs.readFileSync(`${OUT_DIR}/${path}/${outFileName}`, "utf8");
 		fs.writeFileSync(
-			`${OUT_DIR}/${path}/${outFileName}`,
+			`${OUT_DIR}/${path}/${outFileName.replace(".js", ".user.js")}`,
 			`${userScriptHeader}${outText}`,
 		);
+		fs.rmSync(`${OUT_DIR}/${path}/${outFileName}`);
 	}
 }
 
