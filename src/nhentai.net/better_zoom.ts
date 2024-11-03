@@ -3,7 +3,7 @@
 // @namespace   tretrauit-dev
 // @match       *://nhentai.net/g/*
 // @grant       none
-// @version     1.0.2
+// @version     1.0.3
 // @author      tretrauit
 // @description Better Zoom for nhentai
 // @run-at      document-idle
@@ -14,6 +14,27 @@
 
 let currentZoomLevel = 100;
 const zoomStep = 20;
+let settingsStr = localStorage.getItem("nhentaiBetterZoom");
+let settings: {
+    zoomLevel: number;
+};
+if (settingsStr === null) {
+    settingsStr = JSON.stringify({zoomLevel: 100});
+    localStorage.setItem("nhentaiBetterZoom", settingsStr);
+} else {
+    settings = JSON.parse(settingsStr);
+    currentZoomLevel = settings.zoomLevel;
+}
+function saveSettings() {
+    settings.zoomLevel = currentZoomLevel;
+    localStorage.setItem("nhentaiBetterZoom", JSON.stringify(settings));
+}
+function applySettings() {
+    currentZoomLevel = settings.zoomLevel;
+    addZoomLevelIfNotExists(currentZoomLevel);
+    setZoomContainer(currentZoomLevel);
+}
+
 // If the Zoom level is not defined then we create a style for it
 const definedZoomLevels: number[] = [100];
 const imageContainer = document.querySelector("#image-container");
@@ -63,6 +84,7 @@ function setZoomContainer(zoomLevel: number) {
     (imageContainer.children[0].children[0] as any).width = Math.round(defaultWidth * (zoomLevel / 100));
     imageContainer.className = `fit-horizontal full-height zoom-${zoomLevel}`;
     setZoomText(zoomLevel);
+    saveSettings();
 }
 function zoomOut() {
     if (currentZoomLevel <= 20) {
@@ -113,3 +135,4 @@ for (const element of Array.from(document.getElementsByClassName("reader-buttons
 };
 // Cleanup
 newZoomElement.remove();
+applySettings();

@@ -10,4 +10,5 @@
     #### Usage
     + This script replace the default zoom button, so the usage is the same.
     + By default it'll jump 0.2x like the default zoom, but you can set custom scale by 
-double clicking the scale text (the `1x` text)
+double clicking the scale text (the `1x` text).
+    + This script also saves settings so you don't have to change every time you become horny lol.
