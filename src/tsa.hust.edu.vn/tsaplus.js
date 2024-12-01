@@ -4,7 +4,7 @@
 // @namespace   tretrauit-dev
 // @icon        https://tsa.hust.edu.vn/static/media/logo-square.d162284b.svg
 // @grant       none
-// @version     1.1
+// @version     1.1.1
 // @author      tretrauit
 // @description 18:56:28 16/5/2024
 // @homepageURL https://github.com/teppyboy/userscripts
@@ -120,12 +120,14 @@ async function injectTestInfo() {
 }
 
 // Hijack XHR with ours.
+let firstAuth = true;
 const OrigXHR = unsafeWindow.XMLHttpRequest;
 function xhrResponseCallback(xhr) {
     console.log(xhr.responseURL);
-    if (xhr.responseURL.includes("https://api-hust.khaothi.online/my/apiv1/user/info")) {
+    if (xhr.responseURL.includes("https://api-hust.khaothi.online/my/apiv1/user/info") && firstAuth) {
         console.log("Authen token refreshed");
         injectTestInfo().then().catch((e) => console.error(e));
+        firstAuth = false;
     }
 }
 class XMLHttpRequest extends OrigXHR {
