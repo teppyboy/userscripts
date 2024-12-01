@@ -2,6 +2,7 @@
 
 ## Websites supported
 + [nhentai.net](./src/nhentai.net/)
++ [tsa.hust.edu.vn](./src/tsa.hust.edu.vn/)
 
 ## Installation
 1. Install Violentmonkey/Tampermonkey or any other UserScript manager
